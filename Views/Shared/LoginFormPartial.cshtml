@@ -1,0 +1,16 @@
+@model LoginUser;
+@using Wedding_Planner.Models;
+<h1>Login Form</h1>
+ <form asp-action="Login" >
+     
+                <span asp-validation-for="LogEmail"></span><br>
+                <label asp-for="LogEmail">Email: </label>
+                <input class="form-control input-lg" asp-for="LogEmail">
+                <span asp-validation-for="LogPassword"></span><br>
+                <label asp-for="LogPassword">Password: </label>
+                <input class="form-control input-lg" asp-for="LogPassword">
+                <span asp-validation-for="LogPassword"></span><br>
+                
+                <button class="btn btn-primary">Login</button>
+            
+            </form>

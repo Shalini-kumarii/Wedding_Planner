@@ -1,0 +1,82 @@
+@model DashboardViews;
+@using Wedding_Planner.Models;
+@using System.Collections.Generic;
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Registration!</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h1>Welcome @Model.LoggedInUser.FirstName</h1>
+            <a href="/logout">Log Out</a>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Wedding</th>
+                <th>Date</th>
+                <th>Guest</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Wedding wed in Model.ToGetweddingList)
+            {
+                <tr>
+                    <td><a href="/wedding/@wed.WeddingId/ShowWedding">@wed.WedderOne & @wed.WedderTwo</a></td>
+                    <td>@wed.Date</td>
+                    <td>@wed.WeddingGuest.Count</td>
+                    @if (Model.LoggedInUser.UserId == @wed.UserId)
+                    {
+                        <td>
+                            <form asp-action="DoDelete">
+                                <input type="hidden" asp-for="rsvpfrom.WeddingId" value="@wed.WeddingId" />
+                                <button class="btn btn-primary">Delete</button>
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        if (@wed.WeddingGuest.FirstOrDefault(u => u.UserId == (int)Model.LoggedInUser.UserId) == null)
+                        {
+                            <td>
+                                <form asp-action="DoRSVP">
+                                    <input type="hidden" asp-for="rsvpfrom.WeddingId" value="@wed.WeddingId" />
+                                    <button class="btn btn-primary">RSVP</button>
+                                </form>
+
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                <form asp-action="DoUnRSVP">
+                                    <input type="hidden" asp-for="rsvpfrom.WeddingId" value="@wed.WeddingId" />
+                                    <button class="btn btn-primary">Un RSVP</button>
+                                </form>
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form asp-action="NewWedding">
+        <button class="btn btn-primary">New Wedding</button>
+    </form>
+
+</body>
+
+</html>

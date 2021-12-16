@@ -1,0 +1,52 @@
+@model Wedding;
+@using Wedding_Planner.Models;
+@using System.Collections.Generic;
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Registration!</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="col-sm-9 " style="background-color:grey;">
+                <h1>@Model.LoggedinUser.FirstName</h1>
+                <form asp-action="NewWedding">
+
+                    <label asp-for="WedderOne"></label>
+                    <input class="form-control input-lg" asp-for="WedderOne" />
+                    <span asp-validation-for="WedderOne"></span><br>
+
+                    <label asp-for="WedderTwo">: </label>
+                    <input class="form-control input-lg" asp-for="WedderTwo">
+                    <span asp-validation-for="WedderTwo"></span><br>
+
+
+                    <label asp-for="Date"></label>
+                    <input class="form-control input-lg" asp-for="Date" type="date">
+                    <span asp-validation-for="Date"></span><br>
+
+                    <label asp-for="Address"></label>
+                    <input class="form-control input-lg" asp-for="Address">
+                    <span asp-validation-for="Address"></span><br>
+
+                    <input type="hidden" asp-for="UserId" value="@Model.LoggedinUser.UserId" />
+
+
+
+                    <button class="btn btn-primary" asp-for="submit">Create</button>
+
+
+                </form>
+
+</body>
+
+</html>
